@@ -44,6 +44,7 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^4.2.1",
     "jsdom": "^21.1.0",
+    "json-server": "^0.17.4",
     "postcss": "^8.4.31",
     "prettier": "^2.7.1",
     "prettier-config-nick": "^1.0.2",
