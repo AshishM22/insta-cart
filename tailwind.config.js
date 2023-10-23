@@ -6,6 +6,9 @@ export default {
       gridTemplateRows: {
         "[auto,auto,1fr]": "auto auto 1fr",
       },
+      backgroundColor: {
+        "custom-blue": "#1f2937",
+      },
     },
   },
   plugins: [

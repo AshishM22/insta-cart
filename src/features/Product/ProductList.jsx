@@ -187,14 +187,17 @@ export default function ProductList() {
   const [filter, setFilter] = useState({})
 
   useEffect(() => {
-    dispatch(fetchAllproductAsync())
-  }, [dispatch])
+    dispatch(fetchProductsByFilterAsync(filter))
+  }, [dispatch, filter])
 
   const handleFilter = (e, section, option) => {
-    const newFilter = { ...filter, [section.id]: option.value }
-    console.log(newFilter)
+    const newFilter = { ...filter }
+
+    e.target.checked
+      ? (newFilter[section.id] = option.value)
+      : delete newFilter[section.id]
+
     setFilter(newFilter)
-    dispatch(fetchProductsByFilterAsync(newFilter))
   }
   const handleSort = (e, option) => {
     const newFilter = { ...filter, _sort: option.sort, _order: option.order }
