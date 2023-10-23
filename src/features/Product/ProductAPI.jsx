@@ -9,19 +9,26 @@ export function fetchAllProducts() {
   })
 }
 
-export function fetchProductsByFilter(filter) {
+export function fetchProductsByFilter(filter, pagination) {
   // Filter object will look like filter = {"category" : "smartphone"}
   let queryString = ""
+
   for (let key in filter) {
-    queryString += `${key}=${filter[key]}&`
+    const categoryValues = filter[key]
+    if (categoryValues.length) {
+      const lastCategoryValue = categoryValues[categoryValues.length - 1]
+      queryString += `${key}=${lastCategoryValue}&`
+    }
   }
 
+  for (let key in pagination) queryString += `${key}=${pagination[key]}&`
+
   return new Promise(async (resolve) => {
-    const { data } = await axios.get(
+    const response = await axios.get(
       "http://localhost:8080/products?" + queryString,
     )
-    console.log(queryString)
-
-    resolve({ data })
+    const data = response.data
+    const totalItems = response.headers.get("X-Total-Count")
+    resolve({ data: { products: data, totalItems: +totalItems } })
   })
 }
