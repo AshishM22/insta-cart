@@ -41,3 +41,12 @@ export function fetchBrands() {
     resolve({ data })
   })
 }
+
+export function fetchProductById(id) {
+  return new Promise(async (resolve) => {
+    const response = await axios.get("http://localhost:8080/products/" + id)
+    const data = response.data
+    console.log(response.data)
+    resolve({ data })
+  })
+}
