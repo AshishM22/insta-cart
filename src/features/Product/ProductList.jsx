@@ -42,6 +42,7 @@ export default function ProductList() {
 
   const products = useSelector(selectAllProducts)
   const totalItems = useSelector(selectAllItems)
+
   const brands = useSelector(selectBrands)
   const categories = useSelector(selectCategories)
   const [filter, setFilter] = useState({})
@@ -50,12 +51,12 @@ export default function ProductList() {
     {
       id: "category",
       name: "Category",
-      options: brands,
+      options: categories,
     },
     {
       id: "brand",
       name: "Brands",
-      options: categories,
+      options: brands,
     },
   ]
 
