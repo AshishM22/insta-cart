@@ -19,7 +19,7 @@ export function checkUser(loginInfo) {
     const response = await axios.get(BACKEND_URL_USER)
 
     const data = response.data
-    console.log(response.data)
+
     if (data.length) {
       if (password === data[0].password) {
         resolve({ data })

@@ -1,12 +1,13 @@
 import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUppage"
 import HomePage from "./pages/HomePage"
-
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import ProductDetailPage from "./pages/ProductDetailPage"
 import CartPage from "./pages/CartPage"
 import CheckoutPage from "./pages/CheckoutPage"
-import ProductDetailPage from "./pages/ProductDetailPage"
+
 import Protected from "./features/Auth/components/Protected"
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
     ),
   },
 ])
+
 const App = () => {
   return <RouterProvider router={router} />
 }

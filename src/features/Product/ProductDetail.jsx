@@ -3,7 +3,9 @@ import { StarIcon } from "@heroicons/react/20/solid"
 import { RadioGroup } from "@headlessui/react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchProductByIdAsync, selectProductById } from "./ProductSlice"
+import { selectLoggedInUser } from "../Auth/AuthSlice"
 import { useParams } from "react-router-dom"
+import { addToCartAsync } from "../Cart/CartSlice"
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -26,7 +28,6 @@ const highlights = [
   "Pre washed and Pre shunk",
   "Ultra soft 100% cotton",
 ]
-const reviews = { href: "#", average: 4, totalCount: 117 }
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -35,14 +36,20 @@ function classNames(...classes) {
 export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
+
   const product = useSelector(selectProductById)
+  const user = useSelector(selectLoggedInUser)
   const dispatch = useDispatch()
   const params = useParams()
 
   useEffect(() => {
-    console.log(params.id)
     dispatch(fetchProductByIdAsync(params.id))
   }, [dispatch, params.id])
+
+  const handleCart = (e) => {
+    e.preventDefault()
+    dispatch(addToCartAsync({ ...product, quantity: 1, user: user.id }))
+  }
 
   return product ? (
     <div className="bg-white">
@@ -283,6 +290,7 @@ export default function ProductDetail() {
               </div>
 
               <button
+                onClick={handleCart}
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >

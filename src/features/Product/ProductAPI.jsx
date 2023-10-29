@@ -14,9 +14,6 @@ export function fetchProductsByFilter(filter, pagination) {
   return new Promise(async (resolve) => {
     const response = await axios.get(`${BACKEND_URL}/products?${queryString}`)
     const data = response.data
-
-    console.log(`http://localhost:8080/products?${queryString}`)
-
     const totalItems = response.headers.get("X-Total-Count")
     resolve({ data: { products: data, totalItems: +totalItems } })
   })
@@ -44,7 +41,7 @@ export function fetchProductById(id) {
   return new Promise(async (resolve) => {
     const response = await axios.get(`${BACKEND_URL}/products/${id}`)
     const data = response.data
-    console.log(response.data)
+
     resolve({ data })
   })
 }

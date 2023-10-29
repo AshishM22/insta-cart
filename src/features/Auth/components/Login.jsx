@@ -43,6 +43,7 @@ export default function Login() {
               <div className="mt-2">
                 <input
                   id="email"
+                  autoComplete="email"
                   {...register("email", {
                     required: "email is required",
                     pattern: {

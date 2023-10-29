@@ -1,4 +1,4 @@
-import { Fragment } from "react"
+import { Fragment, useEffect } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import {
   Bars3Icon,
@@ -6,13 +6,10 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline"
 import { Link } from "react-router-dom"
+import { fetchItemsByUserIdAsync, selectCartItems } from "../Cart/CartSlice"
+import { selectLoggedInUser } from "../Auth/AuthSlice"
+import { useDispatch, useSelector } from "react-redux"
 
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-}
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
   { name: "Team", href: "#", current: false },
@@ -28,6 +25,14 @@ function classNames(...classes) {
 }
 
 const NavBar = ({ children }) => {
+  const dispatch = useDispatch()
+  const user = useSelector(selectLoggedInUser)
+  const cartItems = useSelector(selectCartItems)
+
+  useEffect(() => {
+    dispatch(fetchItemsByUserIdAsync(user.id))
+  }, [dispatch, user.id])
+
   return (
     <>
       <div className="min-h-full">
@@ -82,9 +87,11 @@ const NavBar = ({ children }) => {
                         </button>
                       </Link>
                       {/* We will Display a Badge on our Cart Icon  */}
-                      <span class="inline-flex items-center rounded-md mb-7 -ml-3 z-10 bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                        3
-                      </span>
+                      {cartItems.length && (
+                        <span class="inline-flex items-center rounded-md mb-7 -ml-3 z-10 bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                          {cartItems.length}
+                        </span>
+                      )}
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
@@ -199,9 +206,6 @@ const NavBar = ({ children }) => {
                         />
                       </button>
                     </Link>
-                    {/* <span class="inline-flex items-center rounded-md mb-7 -ml-3 z-10 bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                      3
-                    </span> */}
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
